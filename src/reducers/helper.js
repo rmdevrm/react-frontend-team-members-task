@@ -11,23 +11,15 @@ const reducerHelper = {
     } = payloadData
 
     return {
-      list: items,
+      membersList: items,
       filter: state.filter,
-      // pagination: {
-      //   hasPrevious,
-      //   hasNext,
-      //   totalPages,
-      //   pageNumber,
-      //   pageSize,
-      //   totalElements
-      // }
       pagination: {
-        pageNumber: 0,
-        hasPrevious: false,
-        hasNext: false,
-        totalPages: 0,
-        totalElements: 0,
-        pageSize: 10
+        hasPrevious,
+        hasNext,
+        totalPages,
+        pageNumber,
+        pageSize,
+        totalElements
       }
     }
   }

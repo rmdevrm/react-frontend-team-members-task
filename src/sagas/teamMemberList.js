@@ -2,13 +2,13 @@ import { takeLatest, put } from 'redux-saga/effects'
 
 import { TEAM_MEMBERS_LIST_REQUEST } from '../actions/actionTypes'
 import { teamMemberListSuccess, teamMemberListFailure } from '../actions/teamMemberList'
-// import teamMemberAPIHelper from '../services/teamMemberList'
+import TeamMemberAPIHelper from '../services/teamMemberList'
 
 function * startTeamMemberListSagaFlow ({ payload }) {
-  console.log('startTeamMemberListSagaFlow ')
   try {
-    // TODO: Need to call the API
-    yield put(teamMemberListSuccess({ response: [] }))
+    // TODO: Send parameters
+    const response = TeamMemberAPIHelper.GetTeamMembersList()
+    yield put(teamMemberListSuccess({ response }))
   } catch (err) {
     yield put(teamMemberListFailure({ msg: err }))
   }
