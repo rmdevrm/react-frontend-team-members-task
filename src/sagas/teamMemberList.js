@@ -5,6 +5,7 @@ import { teamMemberListSuccess, teamMemberListFailure } from '../actions/teamMem
 // import teamMemberAPIHelper from '../services/teamMemberList'
 
 function * startTeamMemberListSagaFlow ({ payload }) {
+  console.log('startTeamMemberListSagaFlow ')
   try {
     // TODO: Need to call the API
     yield put(teamMemberListSuccess({ response: [] }))

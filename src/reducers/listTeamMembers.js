@@ -9,9 +9,9 @@ import reducerHelper from './helper'
 const defaultState = {
   error: '',
   isPending: false,
-  memberslist: [],
+  membersList: [],
   filters: [],
-  meta: {
+  pagination: {
     pageNumber: 0,
     hasPrevious: false,
     hasNext: false,

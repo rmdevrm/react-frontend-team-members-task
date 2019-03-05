@@ -29,7 +29,6 @@ class DisplayTeamMemberList extends Component {
       classes,
       handleChangePageCB
     } = this.props
-
     const emptyRows = pagination.pageSize - memberList.length
 
     return (
