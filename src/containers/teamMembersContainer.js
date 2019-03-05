@@ -4,7 +4,7 @@ import _ from 'lodash';
 import { withStyles } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import { teamMemberListRequest } from '../actions/teamMemberList';
-import DisplayMemberList from './displayMemberList';
+import DisplayMemberList from '../components/displayMemberList';
 
 const styles = () => ({
   root: {
