@@ -20,30 +20,30 @@ class MemberListFilter extends Component {
   state = {
     selectAvailability: 'All',
     selectedProject: {},
-    selectSkills: []
+    selectedSkills: []
   }
 
-  projectsListDebounce = _.debounce((value) => this.getProjectsList(value), 1000);
+  projectsListDebounce = _.debounce((value, callback) => this.getProjectsList(value, callback), 1000);
   skillsListDebounce = _.debounce((value) => this.getSkillsList(value), 1000);
 
-  getProjectsList = async (val) => {
+  getProjectsList = async (val, callback) => {
+    if (!val) return callback([])
     const projectsList = await APIHelper.getProjectsList(val)
-    return projectsList
+    return callback(projectsList)
   }
 
-  getSkillsList = async (val) => {
+  getSkillsList = async (val, callback) => {
+    if (!val) return []
     const skillsList = await APIHelper.getSkillsList(val)
-    return skillsList
-  }
-
-  getOptions = (input, callback) => {
-    const { searchProjects } = this.props;
-    searchProjects(input);
-    callback(null, { options: [] });
+    return callback(skillsList)
   }
 
   onProjectFieldChange = (selectedProject) => {
     this.setState({ selectedProject });
+  }
+
+  onSkillFieldChange = (selectedSkills) => {
+    this.setState({ selectedSkills });
   }
 
   handleSelectChange = (event) => {
@@ -51,18 +51,18 @@ class MemberListFilter extends Component {
   }
 
   searchByFilters = () => {
-    const { selectAvailability, selectedProject, selectSkills } = this.state;
+    const { selectAvailability, selectedProject, selectedSkills } = this.state;
     let filters = []
     if (selectAvailability !== 'All') {
       filters.push({ type: 'availibility', value: selectAvailability })
     }
     if (selectedProject) {
-      filters.push({ type: 'project', value: selectedProject.id })
+      filters.push({ type: 'project', value: selectedProject.value })
     }
-    if (selectSkills) {
+    if (selectedSkills) {
       filters.push({
         type: 'skills',
-        value: selectSkills.map((skill) => skill.value)
+        value: selectedSkills.map((skill) => skill.value)
       })
     }
     // Search using filters
@@ -92,7 +92,8 @@ class MemberListFilter extends Component {
               <div className={'col-xs-4'} >
                 <AsyncSelect
                   defaultOptions
-                  loadOptions={this.projectsListDebounce}
+                  loadOptions={this.getProjectsList}
+                  onChange={this.onProjectFieldChange}
                   zIndex={1000}
                 />
               </div>
@@ -113,7 +114,9 @@ class MemberListFilter extends Component {
               <div className={'col-xs-4'} >
                 <AsyncSelect
                   defaultOptions
-                  loadOptions={this.skillsListDebounce}
+                  isMulti
+                  loadOptions={this.getSkillsList}
+                  onChange={this.onSkillFieldChange}
                   zIndex={1000}
                 />
               </div>

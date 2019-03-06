@@ -96,7 +96,8 @@ class TeamMemberAPIHelper {
       console.error('Error occurred while fetching the search data', e)
       response = { error: e }
     }
-    return response
+    // TODO: delete the response
+    return [{ label: 'ddddd', value: 'eeeeeee' }]
   }
 }
 
