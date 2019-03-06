@@ -1,4 +1,7 @@
 import moment from 'moment'
+import axios from 'axios'
+
+const RAILS_APP_URL = ''
 
 const items = [
   {
@@ -63,9 +66,20 @@ class TeamMemberAPIHelper {
       'has_next': true,
       'page_size': 10,
       'total_pages': 1,
-      'total_elements': 11,
+      'total_elements': 10,
       'page': 1
     }
+  }
+
+  static async fetchDataBySearchText (searchType, inputValue) {
+    let response
+    try {
+      response = await axios(`${RAILS_APP_URL}/team_members?${searchType}=${inputValue}`)
+    } catch (e) {
+      console.error('Error occurred while fetching the search data', e)
+      response = { error: e }
+    }
+    return response
   }
 }
 
