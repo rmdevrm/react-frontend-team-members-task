@@ -33,6 +33,23 @@ const items = [
 ]
 
 class TeamMemberAPIHelper {
+  // static async GetTeamMembersList (pageNumber, pageSize, filters) {
+  //   const API_END_POINT = `${RAILS_APP_URL}/api/team_members`
+  //   const paramsObj = {
+  //     page: pageNumber,
+  //     per_page: pageSize
+  //   }
+  //   filters.forEach((filter) => {
+  //     if (filter.type === 'availibility') {
+  //       paramsObj[`${filter.value}`] = true
+  //     } else {
+  //       paramsObj[`${filter.type}`] = filter.value
+  //     }
+  //   })
+  //   const response = await axios.get(API_END_POINT, { params: paramsObj })
+  //   return response
+  // }
+
   // TODO: need to add parameter
   static GetTeamMembersList () {
     let newItems = [...items]
@@ -74,7 +91,7 @@ class TeamMemberAPIHelper {
   static async fetchDataBySearchText (searchType, inputValue) {
     let response
     try {
-      response = await axios(`${RAILS_APP_URL}/team_members?${searchType}=${inputValue}`)
+      response = await axios(`${RAILS_APP_URL}/api/team_members?${searchType}=${inputValue}`)
     } catch (e) {
       console.error('Error occurred while fetching the search data', e)
       response = { error: e }

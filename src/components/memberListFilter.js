@@ -108,7 +108,7 @@ class MemberListFilter extends Component {
               >
                 <MenuItem value={'All'}>All</MenuItem>
                 <MenuItem value={'working'}>Working</MenuItem>
-                <MenuItem value={'holiday'}>Holiday</MenuItem>
+                <MenuItem value={'holidays'}>Holiday</MenuItem>
               </MaterialSelect>
               <div className={'col-xs-4'} >
                 <AsyncSelect

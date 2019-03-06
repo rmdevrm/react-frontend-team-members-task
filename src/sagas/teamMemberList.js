@@ -6,8 +6,8 @@ import TeamMemberAPIHelper from '../services/teamMemberList'
 
 function * startTeamMemberListSagaFlow ({ payload }) {
   try {
-    // TODO: Send parameters
-    const response = TeamMemberAPIHelper.GetTeamMembersList()
+    const { pageNumber, pageSize, filter } = payload
+    const response = TeamMemberAPIHelper.GetTeamMembersList(pageNumber, pageSize, filter)
     yield put(teamMemberListSuccess({ response }))
   } catch (err) {
     yield put(teamMemberListFailure({ msg: err }))
