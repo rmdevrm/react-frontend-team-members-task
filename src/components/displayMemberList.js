@@ -6,7 +6,7 @@ import Paper from '@material-ui/core/Paper'
 import MemberListHeader from './memberListHeader'
 import MemberListBody from './memberListBody'
 import MemberListPagination from './memberListPagination'
-import CommonHelper from './helper'
+import { CommonHelper } from './helper'
 
 const styles = theme => ({
   root: {

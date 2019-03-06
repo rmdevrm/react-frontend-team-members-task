@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core'
 import TableBody from '@material-ui/core/TableBody'
 import TableRow from '@material-ui/core/TableRow'
 import TableCell from '@material-ui/core/TableCell'
-import CommonHelper from './helper'
+import { CommonHelper } from './helper'
 
 const styles = theme => ({
   margin: {

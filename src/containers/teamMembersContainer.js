@@ -5,6 +5,7 @@ import { withStyles } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import { teamMemberListRequest } from '../actions/teamMemberList';
 import DisplayMemberList from '../components/displayMemberList';
+import MemberListFilter from '../components/memberListFilter';
 
 const styles = () => ({
   root: {
@@ -16,35 +17,21 @@ const styles = () => ({
 });
 
 class TeamMembersListContainer extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      pageNumber: 0,
-      pageSize: 10,
-      sort: 'dateCreated',
-      order: 'desc',
-      filter: '',
-      filterName: '',
-    };
-  }
 
   handleChangePage = (event, page) => {
-    // Call API to get paged data
-    this.props.getTeamMemberList(page, this.state.pageSize, this.state.filter);
-    this.setState({ pageNumber: page });
+    if (page !== 0) {
+      const { pageSize, filters } = this.props
+      this.props.getTeamMemberList(page, pageSize, filters);
+      this.setState({ pageNumber: page });
+    }
   };
-
-  handleFilterChange = ({ target }) => {
-    const filterName = target.name;
-    const filter = target.value;
-    this.setState({ filter, filterName });
-  }
 
   render() {
     const { membersList, pagination } = this.props.teamMembersStates;
 
     return (
       <Paper className={this.props.classes.root} >
+        <MemberListFilter getTeamMembersList={this.props.getTeamMemberList} />
         <DisplayMemberList
           memberList={membersList}
           pagination={pagination}
@@ -56,8 +43,8 @@ class TeamMembersListContainer extends Component {
 
   componentDidMount() {
     // Get the first page on component mount
-    const { pageNumber, pageSize, filter } = this.state;
-    this.props.getTeamMemberList(pageNumber, pageSize, filter);
+    const { pageNumber, pageSize, filters } = this.props;
+    this.props.getTeamMemberList(pageNumber, pageSize, filters);
   }
 }
 

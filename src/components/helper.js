@@ -1,4 +1,16 @@
 import moment from 'moment'
+import store from '../store'
+import {
+  searchProjectsListSuccess,
+  searchProjectsListFailure
+} from '../actions/searchProjectsList'
+
+import {
+  searchSkillListSuccess,
+  searchSkillListFailure
+} from '../actions/searchSkillsList'
+
+import TeamMemberAPIHelper from '../services/teamMemberList'
 
 const CommonHelper = {
   getColumnsForTeamMembersList () {
@@ -31,4 +43,26 @@ const CommonHelper = {
 
 }
 
-export default CommonHelper
+const APIHelper = {
+  async getProjectsList (inputValue) {
+    const response = await TeamMemberAPIHelper.fetchDataBySearchText('project', inputValue)
+    if (response.error) {
+      store.dispatch(searchProjectsListSuccess({ response }))
+    } else {
+      store.dispatch(searchProjectsListFailure({ msg: response.error }))
+    }
+    return response.error ? [] : response
+  },
+
+  async getSkillsList (inputValue) {
+    const response = await TeamMemberAPIHelper.fetchDataBySearchText('skills', inputValue)
+    if (response.error) {
+      store.dispatch(searchSkillListSuccess({ response }))
+    } else {
+      store.dispatch(searchSkillListFailure({ msg: response.error }))
+    }
+    return response.error ? [] : response
+  }
+}
+
+export { CommonHelper, APIHelper }
