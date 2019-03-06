@@ -18,8 +18,8 @@ const reducerHelper = {
         hasNext,
         totalPages,
         pageNumber,
-        pageSize,
-        totalElements
+        totalElements,
+        pageSize
       }
     }
   }

@@ -1,15 +1,34 @@
+import moment from 'moment'
+
 const CommonHelper = {
   getColumnsForTeamMembersList () {
     return [
       'id',
-      'First Name',
-      'Last Name',
-      'Project',
+      'Member Name',
+      'Manager Name',
       'Skills',
-      'Working',
-      'Holiday'
+      'Project',
+      'On Holiday',
+      'Working'
     ]
+  },
+
+  getName (firstName, lastName) {
+    return `${firstName} ${lastName}`
+  },
+
+  isMemberOnHoliday (date) {
+    return moment().isSameOrBefore(moment(date))
+  },
+
+  isMemberOnWorking (date) {
+    return !moment().isBefore(moment(date))
+  },
+
+  getSkills (skills) {
+    return skills.length ? skills.join() : ''
   }
+
 }
 
 export default CommonHelper

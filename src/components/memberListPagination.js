@@ -77,23 +77,26 @@ class TablePaginationActions extends Component {
 
 const TablePaginationActionsWrapped = withStyles(styles, { withTheme: true })(TablePaginationActions);
 
-const MemberListPagination = ({ total, size, page, handleChangePageCB }) => (
-  <TableFooter>
-    <TableRow>
-      <TablePagination
-        rowsPerPageOptions={[]}
-        colSpan={7}
-        count={total}
-        rowsPerPage={size}
-        page={page}
-        SelectProps={{
-          native: true,
-        }}
-        onChangePage={handleChangePageCB}
-        ActionsComponent={TablePaginationActionsWrapped}
-      />
-    </TableRow>
-  </TableFooter>
-);
+const MemberListPagination = ({ total, size, page, handleChangePageCB }) => {
+
+  return (
+    <TableFooter>
+      <TableRow>
+        <TablePagination
+          rowsPerPageOptions={[]}
+          count={total}
+          colSpan={7}
+          rowsPerPage={size}
+          page={page}
+          SelectProps={{
+            native: true,
+          }}
+          onChangePage={handleChangePageCB}
+          ActionsComponent={TablePaginationActionsWrapped}
+        />
+      </TableRow>
+    </TableFooter>
+  );
+}
 
 export default MemberListPagination;

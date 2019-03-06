@@ -31,7 +31,6 @@ class TeamMembersListContainer extends Component {
   handleChangePage = (event, page) => {
     // Call API to get paged data
     this.props.getTeamMemberList(page, this.state.pageSize, this.state.filter);
-    // Also update local state to maintain sort while routing to details page and back
     this.setState({ pageNumber: page });
   };
 

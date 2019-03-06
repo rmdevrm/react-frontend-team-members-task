@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core'
 import TableBody from '@material-ui/core/TableBody'
 import TableRow from '@material-ui/core/TableRow'
 import TableCell from '@material-ui/core/TableCell'
+import CommonHelper from './helper'
 
 const styles = theme => ({
   margin: {
@@ -21,13 +22,24 @@ const MemberListBody = ({ rows, emptyRows }) => {
             tabIndex={-1}
             key={row.id}>
             <TableCell align='right'>{row.id}</TableCell>
-            <TableCell>{row.firstName}</TableCell>
-            <TableCell padding='none'>{row.lastName}</TableCell>
-            <TableCell>{row.lastName}</TableCell>
-            <TableCell align='right'>{row.project}</TableCell>
-            <TableCell>{row.skills}</TableCell>
-            <TableCell align='right'>{row.working}</TableCell>
-            <TableCell>{row.holiday}</TableCell>
+            <TableCell>
+              {CommonHelper.getName(row.first_name, row.last_name)}
+            </TableCell>
+            <TableCell padding='none'>
+              {CommonHelper.getName(row.manager_id.first_name, row.manager_id.last_name)}
+            </TableCell>
+            <TableCell>
+              {CommonHelper.getSkills(row.skills)}
+            </TableCell>
+            <TableCell align='right'>
+              {row.current_project.project_name}
+            </TableCell>
+            <TableCell>
+              {CommonHelper.isMemberOnHoliday(row.on_holidays_till) ? 'Yes' : 'No'}
+            </TableCell>
+            <TableCell align='right'>
+              {CommonHelper.isMemberOnWorking(row.free_since) ? 'Yes' : 'No'}
+            </TableCell>
           </TableRow>
         )
       })}
