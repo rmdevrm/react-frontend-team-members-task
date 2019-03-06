@@ -22,7 +22,7 @@ class TeamMembersListContainer extends Component {
     if (page !== 0) {
       const { pageSize, filters } = this.props
       this.props.getTeamMemberList(page, pageSize, filters);
-      this.setState({ pageNumber: page });
+      this.setState({ pageNumber: page + 1 });
     }
   };
 

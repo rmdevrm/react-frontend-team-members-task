@@ -10,6 +10,8 @@ const reducerHelper = {
       total_elements: totalElements
     } = payloadData
 
+    const filterPageNumber = pageNumber - 1
+
     return {
       membersList: items,
       filter: state.filter,
@@ -17,7 +19,7 @@ const reducerHelper = {
         hasPrevious,
         hasNext,
         totalPages,
-        pageNumber,
+        pageNumber: filterPageNumber < 0 ? 0 : filterPageNumber,
         totalElements,
         pageSize
       }
