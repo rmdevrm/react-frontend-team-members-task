@@ -36,3 +36,42 @@
     transform: rotate(360deg);
   }
 }
+
+.filter-root {
+  padding: 20px;
+}
+
+.col-xs-4 {
+  width: 31%;
+  padding: 12px;
+  float: left;
+}
+
+.pull-left {
+  float: left;
+}
+
+.pull-right {
+  float: right;
+}
+
+.filter-body-style {
+  display: inline-block;
+  width: 100%;
+}
+
+.select-option-root [class*="MuiInputBase-root"] {
+  width: 100%;
+}
+
+.filter-footer-style {
+  padding-left: 12px;
+}
+
+.margin-right-12 {
+  margin-right: 12px;
+}
+
+.filter-footer-style button {
+  margin-right: 12px;
+}

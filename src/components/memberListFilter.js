@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import AsyncSelect from 'react-select/lib/Async'
+import { withStyles } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper'
 import _ from 'lodash'
 import {
@@ -15,6 +16,12 @@ import {
   searchProjectsListClear,
   searchSkillListClear
 } from '../actions'
+
+const styles = {
+  selectRootStyle: {
+    width: '100%'
+  }
+}
 
 class MemberListFilter extends Component {
   state = {
@@ -83,13 +90,16 @@ class MemberListFilter extends Component {
   }
 
   render() {
+    const { classes } = this.props
+    console.log('classes', classes)
 
     return (
       <div>
         <Paper zdepth={2}>
-          <div className={'container-fluid'} >
-            <div className={'row container-fluid'}>
+          <div className={'filter-root'} >
+            <div className={'filter-body-style'}>
               <div className={'col-xs-4'} >
+                <InputLabel htmlFor='select-project'>Select Project</InputLabel>
                 <AsyncSelect
                   defaultOptions
                   loadOptions={this.getProjectsList}
@@ -97,21 +107,8 @@ class MemberListFilter extends Component {
                   zIndex={1000}
                 />
               </div>
-              <div className={'col-xs-4'} />
-              <InputLabel htmlFor='select-availibility'>Select Availibility</InputLabel>
-              <MaterialSelect
-                value={this.state.selectAvailability}
-                onChange={this.handleSelectChange}
-                inputProps={{
-                  name: 'select',
-                  id: 'select-availibility'
-                }}
-              >
-                <MenuItem value={'All'}>All</MenuItem>
-                <MenuItem value={'working'}>Working</MenuItem>
-                <MenuItem value={'holidays'}>Holiday</MenuItem>
-              </MaterialSelect>
               <div className={'col-xs-4'} >
+                <InputLabel htmlFor='select-skills'>Select Skills</InputLabel>
                 <AsyncSelect
                   defaultOptions
                   isMulti
@@ -120,19 +117,38 @@ class MemberListFilter extends Component {
                   zIndex={1000}
                 />
               </div>
+              <div className={'col-xs-4 select-option-root'} >
+                <InputLabel htmlFor='select-availibility'>Select Availibility</InputLabel>
+                <MaterialSelect
+                  value={this.state.selectAvailability}
+                  classes={{ select: classes.selectRootStyle }}
+                  onChange={this.handleSelectChange}
+                  inputProps={{
+                    name: 'select',
+                    id: 'select-availibility'
+                  }}
+                >
+                  <MenuItem value={'All'}>All</MenuItem>
+                  <MenuItem value={'working'}>Working</MenuItem>
+                  <MenuItem value={'holidays'}>Holiday</MenuItem>
+                </MaterialSelect>
+              </div>
             </div>
-            <Button
-              onClick={this.searchByFilters}
-              variant='contained'
-              color='secondary'>
-              Search
-            </Button>
-            <Button
-              onClick={this.clearFilters}
-              variant='contained'
-              color='primary'>
-              Clear
-            </Button>
+            <div className={'filter-footer-style'}>
+              <Button
+                onClick={this.searchByFilters}
+                variant='contained'
+                className={'margin-right-12'}
+                color='secondary'>
+                Search
+              </Button>
+              <Button
+                onClick={this.clearFilters}
+                variant='contained'
+                color='primary'>
+                Clear
+              </Button>
+            </div>
           </div>
         </Paper>
       </div>
@@ -148,4 +164,4 @@ const mapDispatchToProps = (dispatch) => ({
   clearSkillsList: () => dispatch(searchSkillListClear())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(MemberListFilter)
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(MemberListFilter))
