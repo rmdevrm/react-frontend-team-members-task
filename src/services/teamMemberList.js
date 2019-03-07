@@ -53,8 +53,17 @@ class TeamMemberAPIHelper {
   // TODO: need to add parameter
   static GetTeamMembersList (pageNumber, pageSize, filter) {
     console.log('arguments', arguments)
+    const TOTAL_ELEMENTS = 22
+    let RANGE
+    if (pageNumber === 1) {
+      RANGE = 10
+    } else if (pageNumber === 2) {
+      RANGE = 10
+    } else {
+      RANGE = 2
+    }
     let newItems = [...items]
-    for (let index = 0; index < 9; index++) {
+    for (let index = 0; index < RANGE; index++) {
       newItems.push({
         'skills': [
           'js',
@@ -84,7 +93,7 @@ class TeamMemberAPIHelper {
       'has_next': true,
       'page_size': 10,
       'total_pages': 2,
-      'total_elements': 20,
+      'total_elements': TOTAL_ELEMENTS,
       'page': 1
     }
   }
@@ -92,14 +101,17 @@ class TeamMemberAPIHelper {
   static async fetchDataBySearchText (searchType, inputValue) {
     let response
     try {
-      response = await axios(`${RAILS_API_URL}?${searchType}=${inputValue}`)
+      // TODO: modify the rails_app_url
+      response = await axios.get(`http://192.168.3.87:3000/api/${searchType}/autocomplete`, {
+        params: {
+          [`${searchType}`]: inputValue
+        }
+      })
     } catch (e) {
       console.error('Error occurred while fetching the search data', e)
       response = { error: e }
     }
-    // TODO: delete the response
-    // return response
-    return [{ label: 'ddddd', value: 'eeeeeee' }]
+    return [response.data, response.error]
   }
 }
 

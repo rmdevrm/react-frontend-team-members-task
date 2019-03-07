@@ -70,10 +70,10 @@ class MemberListFilter extends Component {
     if (selectAvailability !== 'All') {
       filters.push({ type: 'availability', value: selectAvailability })
     }
-    if (selectedProject) {
+    if (!_.isEmpty(selectedProject)) {
       filters.push({ type: 'project', value: selectedProject.value })
     }
-    if (selectedSkills) {
+    if (selectedSkills && selectedSkills.length) {
       filters.push({
         type: 'skills',
         value: selectedSkills.map((skill) => skill.value)

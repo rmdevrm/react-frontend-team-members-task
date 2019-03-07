@@ -36,29 +36,39 @@ const CommonHelper = {
 
   getSkills (skills) {
     return skills.length ? skills.join() : ''
+  },
+
+  filterList (items, isProjectList) {
+    return items.map((item) => {
+      item.label = `${item.name}`
+      item.value = isProjectList ? item.id : item.name
+      return item
+    })
   }
 
 }
 
 const APIHelper = {
   async getProjectsList (inputValue) {
-    const response = await TeamMemberAPIHelper.fetchDataBySearchText('project', inputValue)
-    if (response.error) {
-      store.dispatch(searchProjectsListFailure({ msg: response.error }))
+    let [response, error] = await TeamMemberAPIHelper.fetchDataBySearchText('projects', inputValue)
+    if (error) {
+      store.dispatch(searchProjectsListFailure({ msg: 'Error occured while calling the API' }))
     } else {
+      response = CommonHelper.filterList(response, true)
       store.dispatch(searchProjectsListSuccess({ response }))
     }
-    return response.error ? [] : response
+    return error ? [] : response
   },
 
   async getSkillsList (inputValue) {
-    const response = await TeamMemberAPIHelper.fetchDataBySearchText('skills', inputValue)
-    if (response.error) {
-      store.dispatch(searchSkillListFailure({ msg: response.error }))
+    let [response, error] = await TeamMemberAPIHelper.fetchDataBySearchText('skills', inputValue)
+    if (error) {
+      store.dispatch(searchSkillListFailure({ msg: 'Error occured while calling the API' }))
     } else {
+      response = CommonHelper.filterList(response)
       store.dispatch(searchSkillListSuccess({ response }))
     }
-    return response.error ? [] : response
+    return error ? [] : response
   }
 }
 
