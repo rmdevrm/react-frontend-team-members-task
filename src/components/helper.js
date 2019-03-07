@@ -44,9 +44,9 @@ const APIHelper = {
   async getProjectsList (inputValue) {
     const response = await TeamMemberAPIHelper.fetchDataBySearchText('project', inputValue)
     if (response.error) {
-      store.dispatch(searchProjectsListSuccess({ response }))
-    } else {
       store.dispatch(searchProjectsListFailure({ msg: response.error }))
+    } else {
+      store.dispatch(searchProjectsListSuccess({ response }))
     }
     return response.error ? [] : response
   },
@@ -54,9 +54,9 @@ const APIHelper = {
   async getSkillsList (inputValue) {
     const response = await TeamMemberAPIHelper.fetchDataBySearchText('skills', inputValue)
     if (response.error) {
-      store.dispatch(searchSkillListSuccess({ response }))
-    } else {
       store.dispatch(searchSkillListFailure({ msg: response.error }))
+    } else {
+      store.dispatch(searchSkillListSuccess({ response }))
     }
     return response.error ? [] : response
   }

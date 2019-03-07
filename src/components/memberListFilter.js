@@ -29,8 +29,13 @@ class MemberListFilter extends Component {
   }
 
   // Added debounce functionality to restrict the search API calling after every keyword
-  projectsListDebounce = _.debounce((value, callback) => this.getProjectsList(value, callback), 1000);
-  skillsListDebounce = _.debounce((value, callback) => this.getSkillsList(value, callback), 1000);
+  projectsListDebounce = _.debounce((value, callback) => {
+    this.getProjectsList(value, callback)
+  }, 1000);
+
+  skillsListDebounce = _.debounce((value, callback) => {
+    this.getSkillsList(value, callback)
+  }, 1000);
 
   getProjectsList = async (val, callback) => {
     if (!val) return callback([])
