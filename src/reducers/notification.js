@@ -2,7 +2,9 @@ import { handleActions, combineActions } from 'redux-actions'
 import {
   RESET_NOTIFICATION,
   TEAM_MEMBERS_LIST_SUCCESS,
-  TEAM_MEMBERS_LIST_FAILURE
+  TEAM_MEMBERS_LIST_FAILURE,
+  SEARCH_SKILLS_LIST_FAILURE,
+  SEARCH_PROJECTS_LIST_FAILURE
 } from '../actions/actionTypes'
 
 const defaultState = {
@@ -12,7 +14,7 @@ const defaultState = {
 
 export default handleActions(
   {
-    [combineActions(TEAM_MEMBERS_LIST_FAILURE)]: (state, action) => {
+    [combineActions(TEAM_MEMBERS_LIST_FAILURE, SEARCH_PROJECTS_LIST_FAILURE, SEARCH_SKILLS_LIST_FAILURE)]: (state, action) => {
       return {
         ...state,
         isError: true,
