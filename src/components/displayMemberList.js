@@ -27,6 +27,7 @@ class DisplayTeamMemberList extends Component {
       memberList,
       pagination,
       classes,
+      pageNumber,
       handleChangePageCB
     } = this.props
     const emptyRows = pagination.pageSize - memberList.length
@@ -43,7 +44,7 @@ class DisplayTeamMemberList extends Component {
             <MemberListPagination
               total={pagination.totalElements}
               size={pagination.pageSize}
-              page={pagination.pageNumber}
+              page={pageNumber}
               handleChangePageCB={handleChangePageCB}
             />
           </Table>

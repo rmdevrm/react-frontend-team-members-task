@@ -13,7 +13,7 @@ const defaultState = {
   membersList: [],
   filters: [],
   pagination: {
-    pageNumber: 0,
+    pageNumber: 1,
     hasPrevious: false,
     hasNext: false,
     totalPages: 0,

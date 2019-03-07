@@ -75,3 +75,12 @@
 .filter-footer-style button {
   margin-right: 12px;
 }
+
+.filter {
+  z-index: 1000;
+  border: 1px outset;
+}
+
+.margin-bottom-11 {
+  margin-bottom: 11px;
+}

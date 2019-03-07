@@ -17,13 +17,15 @@ const styles = () => ({
 });
 
 class TeamMembersListContainer extends Component {
+  state = {
+    pageNumber: 0,
+    pageSize: 10
+  }
 
   handleChangePage = (event, page) => {
-    if (page !== 0) {
-      const { pageSize, filters } = this.props
-      this.props.getTeamMemberList(page, pageSize, filters);
-      this.setState({ pageNumber: page + 1 });
-    }
+    const { pagination, filters } = this.props.teamMembersStates
+    this.props.getTeamMemberList(page + 1, pagination.pageSize, filters);
+    this.setState({ pageNumber: page });
   };
 
   render() {
@@ -34,6 +36,7 @@ class TeamMembersListContainer extends Component {
         <MemberListFilter getTeamMembersList={this.props.getTeamMemberList} />
         <DisplayMemberList
           memberList={membersList}
+          pageNumber={this.state.pageNumber}
           pagination={pagination}
           handleChangePageCB={this.handleChangePage}
         />
@@ -43,8 +46,8 @@ class TeamMembersListContainer extends Component {
 
   componentDidMount() {
     // Get the first page on component mount
-    const { pageNumber, pageSize, filters } = this.props;
-    this.props.getTeamMemberList(pageNumber, pageSize, filters);
+    const { pagination, filters } = this.props.teamMembersStates;
+    this.props.getTeamMemberList(pagination.pageNumber, pagination.pageSize, filters);
   }
 }
 

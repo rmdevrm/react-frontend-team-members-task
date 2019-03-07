@@ -15,12 +15,12 @@ const styles = theme => ({
 const MemberListBody = ({ rows, emptyRows }) => {
   return (
     <TableBody>
-      {rows.map(row => {
+      {rows.map((row, index) => {
         return (
           <TableRow
             hover
             tabIndex={-1}
-            key={row.id}>
+            key={row.id + index}>
             <TableCell align='right'>{row.id}</TableCell>
             <TableCell>
               {CommonHelper.getName(row.first_name, row.last_name)}

@@ -51,7 +51,8 @@ class TeamMemberAPIHelper {
   // }
 
   // TODO: need to add parameter
-  static GetTeamMembersList () {
+  static GetTeamMembersList (pageNumber, pageSize, filter) {
+    console.log('arguments', arguments)
     let newItems = [...items]
     for (let index = 0; index < 9; index++) {
       newItems.push({
@@ -63,17 +64,17 @@ class TeamMemberAPIHelper {
         'on_holidays_till': moment().add(4, 'days').toDate(),
         'free_since': moment().subtract(-1, 'days').toDate(),
         manager_id: {
-          'last_name': `test ${index + 2}`,
+          'last_name': `test ${index + pageNumber + 2}`,
           'first_name': 'manager',
-          'id': index + 2
+          'id': index + pageNumber + 2
         },
         current_project: {
-          'project_name': `project ${index + 2}`,
+          'project_name': `project ${index + pageNumber + 2}`,
           'id': index + 2
         },
-        'last_name': `member ${index + 2}`,
+        'last_name': `member ${index + pageNumber + 2}`,
         'first_name': 'test',
-        'id': index + 2
+        'id': pageNumber
       })
     }
 
@@ -82,8 +83,8 @@ class TeamMemberAPIHelper {
       'has_previous': false,
       'has_next': true,
       'page_size': 10,
-      'total_pages': 1,
-      'total_elements': 10,
+      'total_pages': 2,
+      'total_elements': 20,
       'page': 1
     }
   }

@@ -94,12 +94,14 @@ class MemberListFilter extends Component {
     console.log('classes', classes)
 
     return (
-      <div>
+      <div className={'filter'}>
         <Paper zdepth={2}>
           <div className={'filter-root'} >
             <div className={'filter-body-style'}>
               <div className={'col-xs-4'} >
-                <InputLabel htmlFor='select-project'>Select Project</InputLabel>
+                <div className={'margin-bottom-11'}>
+                  <InputLabel htmlFor='select-project'>Select Project</InputLabel>
+                </div>
                 <AsyncSelect
                   defaultOptions
                   loadOptions={this.getProjectsList}
@@ -108,7 +110,9 @@ class MemberListFilter extends Component {
                 />
               </div>
               <div className={'col-xs-4'} >
-                <InputLabel htmlFor='select-skills'>Select Skills</InputLabel>
+                <div className={'margin-bottom-11'}>
+                  <InputLabel htmlFor='select-skills'>Select Skills</InputLabel>
+                </div>
                 <AsyncSelect
                   defaultOptions
                   isMulti
@@ -118,7 +122,9 @@ class MemberListFilter extends Component {
                 />
               </div>
               <div className={'col-xs-4 select-option-root'} >
-                <InputLabel htmlFor='select-availibility'>Select Availibility</InputLabel>
+                <div className={'margin-bottom-11'}>
+                  <InputLabel htmlFor='select-availibility'>Select Availibility</InputLabel>
+                </div>
                 <MaterialSelect
                   value={this.state.selectAvailability}
                   classes={{ select: classes.selectRootStyle }}

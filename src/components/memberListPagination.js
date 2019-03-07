@@ -78,7 +78,7 @@ class TablePaginationActions extends Component {
 const TablePaginationActionsWrapped = withStyles(styles, { withTheme: true })(TablePaginationActions);
 
 const MemberListPagination = ({ total, size, page, handleChangePageCB }) => {
-
+  
   return (
     <TableFooter>
       <TableRow>
