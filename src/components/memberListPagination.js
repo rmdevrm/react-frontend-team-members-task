@@ -1,22 +1,16 @@
-import React, { Component } from 'react';
-import { withStyles } from '@material-ui/core';
-import TableFooter from '@material-ui/core/TableFooter';
-import TableRow from '@material-ui/core/TableRow';
-import TablePagination from '@material-ui/core/TablePagination';
-import IconButton from '@material-ui/core/IconButton';
-import FirstPageIcon from '@material-ui/icons/FirstPage';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import LastPageIcon from '@material-ui/icons/LastPage';
+import React, { Component } from 'react'
+import { withStyles } from '@material-ui/core'
+import TableFooter from '@material-ui/core/TableFooter'
+import TableRow from '@material-ui/core/TableRow'
+import TablePagination from '@material-ui/core/TablePagination'
+import IconButton from '@material-ui/core/IconButton'
+import FirstPageIcon from '@material-ui/icons/FirstPage'
+import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
+import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
+import LastPageIcon from '@material-ui/icons/LastPage'
+import Styles from '../styles/pagination'
 
-const styles = theme => ({
-  root: {
-    flexShrink: 0,
-    color: theme.palette.text.secondary,
-    marginLeft: theme.spacing.unit * 2.5,
-  },
-});
-
+// Table pagination component
 class TablePaginationActions extends Component {
   handleFirstPageButtonClick = event => {
     this.props.onChangePage(event, 0);
@@ -75,10 +69,10 @@ class TablePaginationActions extends Component {
   }
 }
 
-const TablePaginationActionsWrapped = withStyles(styles, { withTheme: true })(TablePaginationActions);
+const TablePaginationActionsWrapped = withStyles(Styles, { withTheme: true })(TablePaginationActions);
 
 const MemberListPagination = ({ total, size, page, handleChangePageCB }) => {
-  
+
   return (
     <TableFooter>
       <TableRow>

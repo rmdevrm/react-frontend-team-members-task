@@ -1,45 +1,49 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import _ from 'lodash';
-import { withStyles } from '@material-ui/core';
-import Paper from '@material-ui/core/Paper';
-import { teamMemberListRequest } from '../actions/teamMemberList';
-import DisplayMemberList from '../components/displayMemberList';
-import MemberListFilter from '../components/memberListFilter';
-
-const styles = () => ({
-  root: {
-    maxWidth: '90vw',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    marginTop: '1rem',
-  }
-});
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import _ from 'lodash'
+import { withStyles } from '@material-ui/core'
+import Paper from '@material-ui/core/Paper'
+import { teamMemberListRequest } from '../actions/teamMemberList'
+import DisplayMemberList from '../components/displayMemberList'
+import Loader from '../components/wrappers/Loader'
+import MemberListFilter from '../components/memberListFilter'
+import Styles from '../styles/teamMemberContainer';
 
 class TeamMembersListContainer extends Component {
   state = {
-    pageNumber: 0,
-    pageSize: 10
+    // Maintain the pageNumber for table pagination
+    pageNumber: 0
   }
 
   handleChangePage = (event, page) => {
     const { pagination, filters } = this.props.teamMembersStates
+    // Fetching the data as per selected previous and back button
     this.props.getTeamMemberList(page + 1, pagination.pageSize, filters);
     this.setState({ pageNumber: page });
   };
 
   render() {
-    const { membersList, pagination } = this.props.teamMembersStates;
+    const { teamMembersStates, getTeamMemberList, classes } = this.props
+    const { membersList, pagination, isPending } = this.props.teamMembersStates;
+    const { pageSize, totalElements } = pagination
 
     return (
-      <Paper className={this.props.classes.root} >
-        <MemberListFilter getTeamMembersList={this.props.getTeamMemberList} />
-        <DisplayMemberList
-          memberList={membersList}
-          pageNumber={this.state.pageNumber}
-          pagination={pagination}
-          handleChangePageCB={this.handleChangePage}
+      <Paper className={classes.root} >
+        <MemberListFilter
+          teamMembersStates={teamMembersStates}
+          getTeamMembersList={getTeamMemberList}
         />
+        {
+          !isPending
+            ? <DisplayMemberList
+              memberList={membersList}
+              pageNumber={this.state.pageNumber}
+              pageSize={pageSize}
+              totalElements={totalElements}
+              handleChangePageCB={this.handleChangePage}
+            />
+            : <Loader />
+        }
       </Paper>
     );
   }
@@ -57,4 +61,4 @@ const mapDispatchToProps = (dispatch) => ({
   getTeamMemberList: (pageNumber, pageSize, filter) => dispatch(teamMemberListRequest({ pageNumber, pageSize, filter }))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(TeamMembersListContainer));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(Styles)(TeamMembersListContainer));

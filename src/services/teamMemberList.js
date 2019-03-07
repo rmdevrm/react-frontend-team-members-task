@@ -40,7 +40,7 @@ class TeamMemberAPIHelper {
   //     per_page: pageSize
   //   }
   //   filters.forEach((filter) => {
-  //     if (filter.type === 'availibility') {
+  //     if (filter.type === 'availability') {
   //       paramsObj[`${filter.value}`] = true
   //     } else {
   //       paramsObj[`${filter.type}`] = filter.value

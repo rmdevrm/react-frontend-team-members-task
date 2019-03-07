@@ -5,12 +5,7 @@ import TableBody from '@material-ui/core/TableBody'
 import TableRow from '@material-ui/core/TableRow'
 import TableCell from '@material-ui/core/TableCell'
 import { CommonHelper } from './helper'
-
-const styles = theme => ({
-  margin: {
-    margin: theme.spacing.unit
-  }
-})
+import Styles from '../styles/memberListBody'
 
 const MemberListBody = ({ rows, emptyRows }) => {
   return (
@@ -20,7 +15,7 @@ const MemberListBody = ({ rows, emptyRows }) => {
           <TableRow
             hover
             tabIndex={-1}
-            key={row.id + index}>
+            key={`${row.id}${index}`}>
             <TableCell align='right'>{row.id}</TableCell>
             <TableCell>
               {CommonHelper.getName(row.first_name, row.last_name)}
@@ -52,4 +47,4 @@ const MemberListBody = ({ rows, emptyRows }) => {
   )
 }
 
-export default withRouter(withStyles(styles, { withTheme: true })(MemberListBody))
+export default withRouter(withStyles(Styles, { withTheme: true })(MemberListBody))

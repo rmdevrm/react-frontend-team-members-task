@@ -7,30 +7,19 @@ import MemberListHeader from './memberListHeader'
 import MemberListBody from './memberListBody'
 import MemberListPagination from './memberListPagination'
 import { CommonHelper } from './helper'
-
-const styles = theme => ({
-  root: {
-    width: '100%',
-    marginTop: theme.spacing.unit * 3
-  },
-  table: {
-    minWidth: 500
-  },
-  tableWrapper: {
-    overflowX: 'auto'
-  }
-})
+import Styles from '../styles/memberList'
 
 class DisplayTeamMemberList extends Component {
   render () {
     const {
       memberList,
-      pagination,
       classes,
+      pageSize,
+      totalElements,
       pageNumber,
       handleChangePageCB
     } = this.props
-    const emptyRows = pagination.pageSize - memberList.length
+    const emptyRows = pageSize - memberList.length
 
     return (
       <Paper className={classes.root}>
@@ -42,8 +31,8 @@ class DisplayTeamMemberList extends Component {
               emptyRows={emptyRows}
             />
             <MemberListPagination
-              total={pagination.totalElements}
-              size={pagination.pageSize}
+              total={totalElements}
+              size={pageSize}
               page={pageNumber}
               handleChangePageCB={handleChangePageCB}
             />
@@ -54,4 +43,4 @@ class DisplayTeamMemberList extends Component {
   }
 }
 
-export default withRouter(withStyles(styles)(DisplayTeamMemberList))
+export default withRouter(withStyles(Styles)(DisplayTeamMemberList))

@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import AsyncSelect from 'react-select/lib/Async'
-import { withStyles } from '@material-ui/core';
+import { withStyles } from '@material-ui/core'
+import SearchIcon from '@material-ui/icons/Search'
+import DeleteIcon from '@material-ui/icons/Delete'
 import Paper from '@material-ui/core/Paper'
 import _ from 'lodash'
 import {
@@ -17,11 +19,7 @@ import {
   searchSkillListClear
 } from '../actions'
 
-const styles = {
-  selectRootStyle: {
-    width: '100%'
-  }
-}
+import Styles from '../styles/memberListFilter'
 
 class MemberListFilter extends Component {
   state = {
@@ -30,17 +28,20 @@ class MemberListFilter extends Component {
     selectedSkills: []
   }
 
+  // Added debounce functionality to restrict the search API calling after every keyword
   projectsListDebounce = _.debounce((value, callback) => this.getProjectsList(value, callback), 1000);
-  skillsListDebounce = _.debounce((value) => this.getSkillsList(value), 1000);
+  skillsListDebounce = _.debounce((value, callback) => this.getSkillsList(value, callback), 1000);
 
   getProjectsList = async (val, callback) => {
     if (!val) return callback([])
+    // Fetch projects List
     const projectsList = await APIHelper.getProjectsList(val)
     return callback(projectsList)
   }
 
   getSkillsList = async (val, callback) => {
     if (!val) return []
+    // Fetch skills List
     const skillsList = await APIHelper.getSkillsList(val)
     return callback(skillsList)
   }
@@ -60,8 +61,9 @@ class MemberListFilter extends Component {
   searchByFilters = () => {
     const { selectAvailability, selectedProject, selectedSkills } = this.state;
     let filters = []
+    // Create filters array
     if (selectAvailability !== 'All') {
-      filters.push({ type: 'availibility', value: selectAvailability })
+      filters.push({ type: 'availability', value: selectAvailability })
     }
     if (selectedProject) {
       filters.push({ type: 'project', value: selectedProject.value })
@@ -80,7 +82,7 @@ class MemberListFilter extends Component {
     this.setState({
       selectAvailability: 'All',
       selectedProject: {},
-      selectSkills: []
+      selectedSkills: []
     })
     // Clear filter of memberList reducer
     this.props.clearFilter()
@@ -90,8 +92,7 @@ class MemberListFilter extends Component {
   }
 
   render() {
-    const { classes } = this.props
-    console.log('classes', classes)
+    const { classes, teamMembersStates } = this.props
 
     return (
       <div className={'filter'}>
@@ -104,7 +105,9 @@ class MemberListFilter extends Component {
                 </div>
                 <AsyncSelect
                   defaultOptions
-                  loadOptions={this.getProjectsList}
+                  value={this.state.selectedProject}
+                  isDisabled={teamMembersStates.isPending}
+                  loadOptions={this.projectsListDebounce}
                   onChange={this.onProjectFieldChange}
                   zIndex={1000}
                 />
@@ -116,7 +119,10 @@ class MemberListFilter extends Component {
                 <AsyncSelect
                   defaultOptions
                   isMulti
-                  loadOptions={this.getSkillsList}
+                  isSearchable
+                  isDisabled={teamMembersStates.isPending}
+                  value={this.state.selectedSkills}
+                  loadOptions={this.skillsListDebounce}
                   onChange={this.onSkillFieldChange}
                   zIndex={1000}
                 />
@@ -127,6 +133,7 @@ class MemberListFilter extends Component {
                 </div>
                 <MaterialSelect
                   value={this.state.selectAvailability}
+                  disabled={teamMembersStates.isPending}
                   classes={{ select: classes.selectRootStyle }}
                   onChange={this.handleSelectChange}
                   inputProps={{
@@ -144,15 +151,16 @@ class MemberListFilter extends Component {
               <Button
                 onClick={this.searchByFilters}
                 variant='contained'
+                disabled={teamMembersStates.isPending}
                 className={'margin-right-12'}
                 color='secondary'>
-                Search
+                <SearchIcon /> Search
               </Button>
               <Button
                 onClick={this.clearFilters}
                 variant='contained'
                 color='primary'>
-                Clear
+                <DeleteIcon /> Clear
               </Button>
             </div>
           </div>
@@ -170,4 +178,4 @@ const mapDispatchToProps = (dispatch) => ({
   clearSkillsList: () => dispatch(searchSkillListClear())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(MemberListFilter))
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(Styles)(MemberListFilter))

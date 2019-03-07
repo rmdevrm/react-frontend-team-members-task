@@ -2,13 +2,10 @@ import moment from 'moment'
 import store from '../store'
 import {
   searchProjectsListSuccess,
-  searchProjectsListFailure
-} from '../actions/searchProjectsList'
-
-import {
+  searchProjectsListFailure,
   searchSkillListSuccess,
   searchSkillListFailure
-} from '../actions/searchSkillsList'
+} from '../actions'
 
 import TeamMemberAPIHelper from '../services/teamMemberList'
 
