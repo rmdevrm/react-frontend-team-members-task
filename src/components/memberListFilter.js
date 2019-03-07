@@ -79,21 +79,36 @@ class MemberListFilter extends Component {
         value: selectedSkills.map((skill) => skill.value)
       })
     }
-    // Search using filters
+    // Reset page to 1
     this.props.getTeamMembersList(1, 10, filters)
   }
 
   clearFilters = () => {
+    const { selectAvailability, selectedProject, selectedSkills } = this.state
+    if (selectAvailability === 'All' && _.isEmpty(selectedProject) && !selectedSkills.length) {
+      return
+    }
+    const {
+      clearFilter,
+      clearProjectsList,
+      clearSkillsList,
+      getTeamMembersList,
+      teamMembersStates
+    } = this.props
     this.setState({
       selectAvailability: 'All',
       selectedProject: {},
       selectedSkills: []
     })
     // Clear filter of memberList reducer
-    this.props.clearFilter()
+    clearFilter()
     // Clear autocomplete field filter
-    this.props.clearProjectsList()
-    this.props.clearSkillsList()
+    clearProjectsList()
+    clearSkillsList()
+    if (teamMembersStates.filters && teamMembersStates.filters.length) {
+      // Reset page to 1
+      getTeamMembersList(1, 10, [])
+    }
   }
 
   render() {
@@ -167,7 +182,7 @@ class MemberListFilter extends Component {
                 onClick={this.clearFilters}
                 variant='contained'
                 color='primary'>
-                <DeleteIcon /> Clear
+                <DeleteIcon /> Clear All
               </Button>
             </div>
           </div>
@@ -177,12 +192,10 @@ class MemberListFilter extends Component {
   }
 }
 
-const mapStateToProps = (states) => ({ serachProjectsStates: states.searchProjectsList });
-
 const mapDispatchToProps = (dispatch) => ({
   clearFilter: () => dispatch(teamMemberListFilterClear()),
   clearProjectsList: () => dispatch(searchProjectsListClear()),
   clearSkillsList: () => dispatch(searchSkillListClear())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(Styles)(MemberListFilter))
+export default connect(null, mapDispatchToProps)(withStyles(Styles)(MemberListFilter))

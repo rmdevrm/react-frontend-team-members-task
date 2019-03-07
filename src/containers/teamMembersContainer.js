@@ -24,7 +24,7 @@ class TeamMembersListContainer extends Component {
 
   render() {
     const { teamMembersStates, getTeamMemberList, classes } = this.props
-    const { membersList, pagination, isPending } = this.props.teamMembersStates;
+    const { membersList, pagination, isPending } = this.props.teamMembersStates
     const { pageSize, totalElements } = pagination
 
     return (
@@ -58,7 +58,7 @@ class TeamMembersListContainer extends Component {
 const mapStateToProps = (state) => ({ teamMembersStates: state.teamMembers });
 
 const mapDispatchToProps = (dispatch) => ({
-  getTeamMemberList: (pageNumber, pageSize, filter) => dispatch(teamMemberListRequest({ pageNumber, pageSize, filter }))
+  getTeamMemberList: (pageNumber, pageSize, filters) => dispatch(teamMemberListRequest({ pageNumber, pageSize, filters }))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(Styles)(TeamMembersListContainer));
