@@ -45,7 +45,7 @@ class MemberListFilter extends Component {
   }
 
   getSkillsList = async (val, callback) => {
-    if (!val) return []
+    if (!val) return callback([])
     // Fetch skills List
     const skillsList = await APIHelper.getSkillsList(val)
     return callback(skillsList)
@@ -98,6 +98,7 @@ class MemberListFilter extends Component {
 
   render() {
     const { classes, teamMembersStates } = this.props
+    const { selectedProject, selectedSkills } = this.state
 
     return (
       <div className={'filter'}>
@@ -110,7 +111,8 @@ class MemberListFilter extends Component {
                 </div>
                 <AsyncSelect
                   defaultOptions
-                  value={this.state.selectedProject}
+                  isClearable={!!(selectedProject && selectedProject.value)}
+                  value={selectedProject}
                   isDisabled={teamMembersStates.isPending}
                   loadOptions={this.projectsListDebounce}
                   onChange={this.onProjectFieldChange}
@@ -126,7 +128,7 @@ class MemberListFilter extends Component {
                   isMulti
                   isSearchable
                   isDisabled={teamMembersStates.isPending}
-                  value={this.state.selectedSkills}
+                  value={selectedSkills}
                   loadOptions={this.skillsListDebounce}
                   onChange={this.onSkillFieldChange}
                   zIndex={1000}
