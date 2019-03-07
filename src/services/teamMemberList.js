@@ -1,7 +1,8 @@
 import moment from 'moment'
 import axios from 'axios'
 
-const RAILS_APP_URL = ''
+// Rails App URL
+const RAILS_API_URL = `${process.env.REACT_APP_RAILS_APP_URL}/api/team_members`
 
 const items = [
   {
@@ -34,7 +35,6 @@ const items = [
 
 class TeamMemberAPIHelper {
   // static async GetTeamMembersList (pageNumber, pageSize, filters) {
-  //   const API_END_POINT = `${RAILS_APP_URL}/api/team_members`
   //   const paramsObj = {
   //     page: pageNumber,
   //     per_page: pageSize
@@ -46,7 +46,7 @@ class TeamMemberAPIHelper {
   //       paramsObj[`${filter.type}`] = filter.value
   //     }
   //   })
-  //   const response = await axios.get(API_END_POINT, { params: paramsObj })
+  //   const response = await axios.get(RAILS_API_URL, { params: paramsObj })
   //   return response
   // }
 
@@ -92,12 +92,13 @@ class TeamMemberAPIHelper {
   static async fetchDataBySearchText (searchType, inputValue) {
     let response
     try {
-      response = await axios(`${RAILS_APP_URL}/api/team_members?${searchType}=${inputValue}`)
+      response = await axios(`${RAILS_API_URL}?${searchType}=${inputValue}`)
     } catch (e) {
       console.error('Error occurred while fetching the search data', e)
       response = { error: e }
     }
     // TODO: delete the response
+    // return response
     return [{ label: 'ddddd', value: 'eeeeeee' }]
   }
 }
