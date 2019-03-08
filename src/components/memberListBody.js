@@ -16,7 +16,7 @@ const MemberListBody = ({ rows, emptyRows }) => {
             hover
             tabIndex={-1}
             key={`${row.id}${index}`}>
-            <TableCell align='right'>{row.id}</TableCell>
+            <TableCell>{row.id}</TableCell>
             <TableCell>
               {CommonHelper.getName(row.first_name, row.last_name)}
             </TableCell>
@@ -26,13 +26,13 @@ const MemberListBody = ({ rows, emptyRows }) => {
             <TableCell>
               {CommonHelper.getSkills(row.skills)}
             </TableCell>
-            <TableCell align='right'>
+            <TableCell>
               {(row.current_project && row.current_project.name) || 'No Project Assigned'}
             </TableCell>
             <TableCell>
               {row.holiday ? 'Yes' : 'No'}
             </TableCell>
-            <TableCell align='right'>
+            <TableCell>
               {row.working_hour ? 'Yes' : 'No'}
             </TableCell>
           </TableRow>
