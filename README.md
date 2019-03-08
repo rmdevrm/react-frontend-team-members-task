@@ -36,15 +36,15 @@ For fetching the team members details
 - http://location:5000/api/team_members - (can pass the parameters for pagination i.e page and per_page)
 
 For filtering
-- http://location:5000/api/team_members?working=true (for filtering)
-- http://location:5000/api/team_members?skill=['js', 'react'] (for filtering)
-- http://location:5000/api/team_members?holiday=true
+- http://location:5000/api/team_members?working_hour=true (for filtering)
+- http://location:5000/api/team_members?skills=js,react (for filtering)
+- http://location:5000/api/team_members?holidays=true
 - http://location:5000/api/team_members?project=2
 
-Apart from this, we've also added the `auto-complete` search option on project and skills search fields. So when the user search for any text, then we call the rails API to fetch the project or skill related data as per the input keyword. Consumed following APIs for this functionality on front-end side -
+Apart from this, we've also added the `auto-complete` search option on project and skills search fields. So when the user search for any text, then we call the rails API to fetch the project or skill related data as per the input keyword. Consumed following rails APIs for this functionality on front-end side -
 
-- http://location:5000/api/team_members?skill=skill_name
-- http://location:5000/api/team_members?project=project_name
+- http://location:5000/api/team_members/skills/autocomplete?skills=skill_name
+- http://location:5000/api/team_members/projects/autocomplete?projects=project_name
 
 ### Notification
 This is a simple Snackbar component which shows on each API call and alerts the user about the success or failure of the call.
