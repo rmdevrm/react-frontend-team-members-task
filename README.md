@@ -4,7 +4,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 -----------------------------------
 
-We're using rails application APIs, So first we need to start the rails application and currently, we're using the default rails app url as https://location:5000, but we can modify the URL using following steps -
+We're using rails application APIs, So first we need to start the rails application and currently, we're using the default rails app url as http://localhost:5000, but we can modify the URL using following steps -
 - Go to the .env file (which is present in project directory)
 - Modify the `REACT_APP_RAILS_APP_URL`
 - Restart the application by using `npm start`
