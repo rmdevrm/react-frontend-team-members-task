@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import _ from 'lodash'
 import { withStyles } from '@material-ui/core'
 import Paper from '@material-ui/core/Paper'
 import { teamMemberListRequest } from '../actions/teamMemberList'
@@ -22,6 +21,14 @@ class TeamMembersListContainer extends Component {
     this.setState({ pageNumber: page });
   };
 
+  componentWillReceiveProps(nextProps) {
+    const { pageNumber } = this.state
+    const { pageNumber: newPageNumber } = nextProps.teamMembersStates.pagination
+    if (pageNumber !== 0 && newPageNumber !== pageNumber) {
+      this.setState({ pageNumber: newPageNumber })
+    }
+  }
+
   render() {
     const { teamMembersStates, getTeamMemberList, classes } = this.props
     const { membersList, pagination, isPending } = this.props.teamMembersStates
@@ -34,7 +41,7 @@ class TeamMembersListContainer extends Component {
           getTeamMembersList={getTeamMemberList}
         />
         {
-          (!isPending && membersList.length)
+          !isPending
             ? <DisplayMemberList
               memberList={membersList}
               pageNumber={this.state.pageNumber}

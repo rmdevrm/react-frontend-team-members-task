@@ -51,16 +51,30 @@ class MemberListFilter extends Component {
     return callback(skillsList)
   }
 
+  resetToFirstPage = () => {
+    if (this.isAnyFilterSelected() && this.isComponentFilterReset()) {
+      // Reset page to 1
+      this.props.getTeamMembersList(1, 10, [])
+    }
+  }
+
+  isComponentFilterReset() {
+    const { selectAvailability, selectedProject, selectedSkills } = this.state
+    return (selectAvailability === 'All'
+      && _.isEmpty(selectedProject)
+      && !selectedSkills.length)
+  }
+
   onProjectFieldChange = (selectedProject) => {
-    this.setState({ selectedProject });
+    this.setState({ selectedProject }, () => this.resetToFirstPage());
   }
 
   onSkillFieldChange = (selectedSkills) => {
-    this.setState({ selectedSkills });
+    this.setState({ selectedSkills }, () => this.resetToFirstPage());
   }
 
   handleSelectChange = (event) => {
-    this.setState({ selectAvailability: event.target.value });
+    this.setState({ selectAvailability: event.target.value }, () => this.resetToFirstPage());
   }
 
   searchByFilters = () => {
@@ -76,36 +90,42 @@ class MemberListFilter extends Component {
     if (selectedSkills && selectedSkills.length) {
       filters.push({
         type: 'skills',
-        value: selectedSkills.map((skill) => skill.value)
+        value: selectedSkills.map((skill) => skill.value).join()
       })
     }
     // Reset page to 1
     this.props.getTeamMembersList(1, 10, filters)
   }
 
+  isAnyFilterSelected() {
+    const { teamMembersStates } = this.props
+    return teamMembersStates.filters && teamMembersStates.filters.length
+  }
+
+  clearFilterStore() {
+    const { clearFilter, clearProjectsList, clearSkillsList } = this.props
+    clearFilter()
+    // Clear autocomplete field filter
+    clearProjectsList()
+    clearSkillsList()
+  }
+
   clearFilters = () => {
-    const { selectAvailability, selectedProject, selectedSkills } = this.state
-    if (selectAvailability === 'All' && _.isEmpty(selectedProject) && !selectedSkills.length) {
+    const { getTeamMembersList } = this.props
+    const isAnyFilterSelected = this.isAnyFilterSelected()
+    if (!isAnyFilterSelected && this.isComponentFilterReset()) {
       return
     }
-    const {
-      clearFilter,
-      clearProjectsList,
-      clearSkillsList,
-      getTeamMembersList,
-      teamMembersStates
-    } = this.props
+
     this.setState({
       selectAvailability: 'All',
       selectedProject: {},
       selectedSkills: []
     })
-    // Clear filter of memberList reducer
-    clearFilter()
-    // Clear autocomplete field filter
-    clearProjectsList()
-    clearSkillsList()
-    if (teamMembersStates.filters && teamMembersStates.filters.length) {
+
+    this.clearFilterStore()
+
+    if (isAnyFilterSelected) {
       // Reset page to 1
       getTeamMembersList(1, 10, [])
     }
@@ -164,7 +184,7 @@ class MemberListFilter extends Component {
                   }}
                 >
                   <MenuItem value={'All'}>All</MenuItem>
-                  <MenuItem value={'working'}>Working</MenuItem>
+                  <MenuItem value={'working_hour'}>Working</MenuItem>
                   <MenuItem value={'holidays'}>Holiday</MenuItem>
                 </MaterialSelect>
               </div>

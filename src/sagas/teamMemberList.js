@@ -1,4 +1,4 @@
-import { takeLatest, put, delay } from 'redux-saga/effects'
+import { takeLatest, put } from 'redux-saga/effects'
 
 import { TEAM_MEMBERS_LIST_REQUEST } from '../actions/actionTypes'
 import { teamMemberListSuccess, teamMemberListFailure } from '../actions'

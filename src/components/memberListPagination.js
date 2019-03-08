@@ -93,4 +93,4 @@ const MemberListPagination = ({ total, size, page, handleChangePageCB }) => {
   );
 }
 
-export default MemberListPagination;
+export default MemberListPagination
