@@ -26,14 +26,6 @@ const CommonHelper = {
     return `${firstName} ${lastName}`
   },
 
-  isMemberOnHoliday (date) {
-    return moment().isSameOrBefore(moment(date))
-  },
-
-  isMemberOnWorking (date) {
-    return !moment().isBefore(moment(date))
-  },
-
   getSkills (skills) {
     return skills.length ? skills.join() : ''
   },

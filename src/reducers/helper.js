@@ -6,8 +6,8 @@ const reducerHelper = {
       has_next: hasNext,
       total_pages: totalPages,
       page: pageNumber,
-      page_size: pageSize,
-      total_elements: totalElements
+      per: pageSize,
+      total_count: totalElements
     } = payloadData
 
     const filterPageNumber = pageNumber - 1

@@ -34,7 +34,7 @@ class TeamMembersListContainer extends Component {
           getTeamMembersList={getTeamMemberList}
         />
         {
-          !isPending
+          (!isPending && membersList.length)
             ? <DisplayMemberList
               memberList={membersList}
               pageNumber={this.state.pageNumber}

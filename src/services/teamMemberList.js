@@ -34,68 +34,26 @@ const items = [
 ]
 
 class TeamMemberAPIHelper {
-  // static async GetTeamMembersList (pageNumber, pageSize, filters) {
-  //   const paramsObj = {
-  //     page: pageNumber,
-  //     per_page: pageSize
-  //   }
-  //   filters.forEach((filter) => {
-  //     if (filter.type === 'availability') {
-  //       paramsObj[`${filter.value}`] = true
-  //     } else {
-  //       paramsObj[`${filter.type}`] = filter.value
-  //     }
-  //   })
-  //   const response = await axios.get(RAILS_API_URL, { params: paramsObj })
-  //   return response
-  // }
-
-  // TODO: need to add parameter
-  static GetTeamMembersList (pageNumber, pageSize, filter) {
-    console.log('arguments', arguments)
-    const TOTAL_ELEMENTS = 22
-    let RANGE
-    if (pageNumber === 1) {
-      RANGE = 10
-    } else if (pageNumber === 2) {
-      RANGE = 10
-    } else {
-      RANGE = 2
+  static async GetTeamMembersList (pageNumber, pageSize, filters) {
+    const paramsObj = {
+      page: pageNumber,
+      per: pageSize
     }
-    let newItems = [...items]
-    for (let index = 0; index < RANGE; index++) {
-      newItems.push({
-        'skills': [
-          'js',
-          'Angular',
-          'python'
-        ],
-        'on_holidays_till': moment().add(4, 'days').toDate(),
-        'free_since': moment().subtract(-1, 'days').toDate(),
-        manager_id: {
-          'last_name': `test ${index + pageNumber + 2}`,
-          'first_name': 'manager',
-          'id': index + pageNumber + 2
-        },
-        current_project: {
-          'project_name': `project ${index + pageNumber + 2}`,
-          'id': index + 2
-        },
-        'last_name': `member ${index + pageNumber + 2}`,
-        'first_name': 'test',
-        'id': pageNumber
-      })
+    filters && filters.forEach((filter) => {
+      if (filter.type === 'availability') {
+        paramsObj[`${filter.value}`] = true
+      } else {
+        paramsObj[`${filter.type}`] = filter.value
+      }
+    })
+    let response
+    try {
+      response = await axios.get(`http://192.168.3.87:5000/api/team_members`, { params: paramsObj })
+    } catch (e) {
+      console.log('Error occured while fetching the team members list', e)
+      response = { error: e }
     }
-
-    return {
-      'items': newItems,
-      'has_previous': false,
-      'has_next': true,
-      'page_size': 10,
-      'total_pages': 2,
-      'total_elements': TOTAL_ELEMENTS,
-      'page': 1
-    }
+    return [response.data, response.error]
   }
 
   static async fetchDataBySearchText (searchType, inputValue) {

@@ -27,13 +27,13 @@ const MemberListBody = ({ rows, emptyRows }) => {
               {CommonHelper.getSkills(row.skills)}
             </TableCell>
             <TableCell align='right'>
-              {row.current_project.project_name}
+              {(row.current_project && row.current_project.name) || 'No Project Assigned'}
             </TableCell>
             <TableCell>
-              {CommonHelper.isMemberOnHoliday(row.on_holidays_till) ? 'Yes' : 'No'}
+              {row.holiday ? 'Yes' : 'No'}
             </TableCell>
             <TableCell align='right'>
-              {CommonHelper.isMemberOnWorking(row.free_since) ? 'Yes' : 'No'}
+              {row.working_hour ? 'Yes' : 'No'}
             </TableCell>
           </TableRow>
         )

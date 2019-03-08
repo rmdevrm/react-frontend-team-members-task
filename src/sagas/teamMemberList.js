@@ -5,13 +5,12 @@ import { teamMemberListSuccess, teamMemberListFailure } from '../actions'
 import TeamMemberAPIHelper from '../services/teamMemberList'
 
 function * startTeamMemberListSagaFlow ({ payload }) {
-  try {
-    yield delay(2000)
-    const { pageNumber, pageSize, filter } = payload
-    const response = TeamMemberAPIHelper.GetTeamMembersList(pageNumber, pageSize, filter)
+  const { pageNumber, pageSize, filters } = payload
+  const [response, error] = yield TeamMemberAPIHelper.GetTeamMembersList(pageNumber, pageSize, filters)
+  if (error) {
+    yield put(teamMemberListFailure({ msg: 'Error occured while fetching the team member list' }))
+  } else {
     yield put(teamMemberListSuccess({ response }))
-  } catch (err) {
-    yield put(teamMemberListFailure({ msg: err }))
   }
 }
 
